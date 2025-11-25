@@ -10,39 +10,39 @@ The SMB AI Command Platform uses a hybrid microservices architecture combining N
 
 ```mermaid
 flowchart TB
-    subgraph Clients["🖥️ Client Applications"]
+    subgraph Clients["Client Applications"]
         direction LR
-        WEB["🌐 Web App<br/>(React)"]
-        MOBILE["📱 Mobile<br/>(PWA)"]
-        MCPCLI["🤖 MCP CLI<br/>(Claude)"]
-        THIRD["🔗 Third-party<br/>(via API)"]
+        WEB["Web App<br/>(React)"]
+        MOBILE["Mobile<br/>(PWA)"]
+        MCPCLI["MCP CLI<br/>(Claude)"]
+        THIRD["Third-party<br/>(via API)"]
     end
 
-    subgraph Gateway["🚪 API Gateway - Node.js/TypeScript + Fastify"]
+    subgraph Gateway["API Gateway - Node.js/TypeScript + Fastify"]
         direction LR
-        AUTH["🔐 Authentication"]
-        RATE["⏱️ Rate Limiting"]
-        TENANT["🏢 Tenant Routing"]
-        LOG["📝 Logging"]
+        AUTH["Authentication"]
+        RATE["Rate Limiting"]
+        TENANT["Tenant Routing"]
+        LOG["Logging"]
     end
 
-    subgraph Services["⚙️ Backend Services"]
+    subgraph Services["Backend Services"]
         direction LR
-        subgraph AI["🧠 AI Orchestrator<br/>(Python/FastAPI)"]
+        subgraph AI["AI Orchestrator<br/>(Python/FastAPI)"]
             LLM["LLM Providers"]
             ROUTER["Query Router"]
             PLANNER["Task Planner"]
             EXEC["Tool Execution"]
         end
 
-        subgraph CONN["🔌 Connectors<br/>(Python/FastAPI)"]
+        subgraph CONN["Connectors<br/>(Python/FastAPI)"]
             SHOP["Shopify"]
             STRIPE["Stripe"]
             QB["QuickBooks"]
             HUB["HubSpot"]
         end
 
-        subgraph MODULES["📦 Modules"]
+        subgraph MODULES["Modules"]
             OPS["Ops Copilot"]
             MINI["Mini Foundry"]
             SEC["Security Scanner"]
@@ -50,12 +50,12 @@ flowchart TB
         end
     end
 
-    subgraph Data["💾 Data Layer"]
+    subgraph Data["Data Layer"]
         direction LR
-        PG["🐘 PostgreSQL<br/>Primary DB"]
-        REDIS["⚡ Redis<br/>Cache"]
-        KAFKA["📨 Kafka<br/>Events"]
-        QDRANT["🔍 Qdrant<br/>Vectors"]
+        PG["PostgreSQL<br/>Primary DB"]
+        REDIS["Redis<br/>Cache"]
+        KAFKA["Kafka<br/>Events"]
+        QDRANT["Qdrant<br/>Vectors"]
     end
 
     Clients --> Gateway
