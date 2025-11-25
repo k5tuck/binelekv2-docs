@@ -4,6 +4,27 @@ Use this prompt when starting a new Claude Code session to implement the backend
 
 ---
 
+## Initial Setup
+
+**IMPORTANT:** Before starting work, clone the repo and initialize submodules:
+
+```bash
+# Clone the repository
+git clone https://github.com/k5tuck/binelekv2-smb-platform-backend.git
+cd binelekv2-smb-platform-backend
+
+# Initialize and pull the docs submodule
+git submodule update --init --recursive
+
+# Verify docs are present
+ls docs/  # Should show ARCHITECTURE.md, prompts/, etc.
+
+# If docs submodule is empty, manually pull:
+cd docs && git pull origin main && cd ..
+```
+
+---
+
 ## Context
 
 You are working on the **SMB AI Command Platform** backend repository: `binelekv2-smb-platform-backend`
@@ -12,9 +33,31 @@ This is a multi-service architecture with:
 - **Gateway** (Node.js/Fastify) - `/gateway/`
 - **AI Orchestrator** (Python/FastAPI) - `/services/ai-orchestrator/`
 - **Connectors** (Python/FastAPI) - `/services/connectors/`
+- **MCP Server** (Node.js/TypeScript) - `/mcp-server/` - Model Context Protocol server
 - **Marketplace Scraper** (Python/FastAPI) - NEW, to be created at `/services/marketplace-scraper/`
 
 **Reference:** See `docs/ARCHITECTURE.md` for full system architecture.
+
+---
+
+## Current Implementation Status
+
+**IMPLEMENTED (exists but needs completion):**
+- SQLAlchemy ORM models for all entities
+- Service layer structure (TaskService, DashboardService, SecurityService, MarketplaceService, LLMService)
+- LLM API routes with multi-provider support
+- Connector Pydantic schemas
+- Database schema and seed data
+- MCP Server structure
+
+**NOT IMPLEMENTED (only in docs/planned):**
+- Real authentication (auth.ts is all placeholders)
+- Module route implementations (all return mock data)
+- Connector OAuth flows (TODOs in code)
+- Workflow execution engine (placeholder)
+- Marketplace scraper service (doesn't exist)
+- Competitor discovery (doesn't exist)
+- Price tracking automation (doesn't exist)
 
 ---
 

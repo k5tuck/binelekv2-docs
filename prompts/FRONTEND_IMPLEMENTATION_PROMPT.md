@@ -4,6 +4,33 @@ Use this prompt when starting a new Claude Code session to implement the fronten
 
 ---
 
+## Initial Setup
+
+**IMPORTANT:** Before starting work, clone the repo:
+
+```bash
+# Clone the repository
+git clone https://github.com/k5tuck/binelekv2-smb-platform-frontend.git
+cd binelekv2-smb-platform-frontend
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
+**For architecture reference**, clone the backend repo to access documentation:
+```bash
+# In a separate directory
+git clone https://github.com/k5tuck/binelekv2-smb-platform-backend.git
+cd binelekv2-smb-platform-backend
+git submodule update --init --recursive
+# Docs are in: docs/ARCHITECTURE.md
+```
+
+---
+
 ## Context
 
 You are working on the **SMB AI Command Platform** frontend repository: `binelekv2-smb-platform-frontend`
@@ -16,6 +43,25 @@ This is a React/TypeScript PWA with:
 - **Zustand** for state management (if needed)
 
 **Reference:** See the backend repo's `docs/ARCHITECTURE.md` for full system architecture.
+
+---
+
+## Current Implementation Status
+
+**IMPLEMENTED:**
+- JWT token refresh interceptor in `src/services/api.ts`
+- LLM service for backend API integration in `src/services/llm.ts`
+- Basic page structure for all modules
+- Authentication context and protected routes
+
+**NOT IMPLEMENTED (uses mock data):**
+- All module pages (OpsCopilot, MiniFoundry, MarketplaceIntel, CybersecurityScanner)
+- Connectors page (buttons have no handlers)
+- Settings page (save uses fake setTimeout)
+- Error boundaries
+- Loading skeleton components
+- Toast notification system
+- Competitor discovery UI
 
 ---
 
