@@ -96,7 +96,8 @@ const config = {
         title: 'Binelek Internal',
         logo: {
           alt: 'Binelek Logo',
-          src: 'img/logo.svg',
+          src: 'img/logo.png',
+          style: { height: '32px' },
         },
         items: [
           {
