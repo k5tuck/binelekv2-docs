@@ -11,7 +11,7 @@ const config = {
   tagline: 'Internal documentation and resources for the Binelek team',
   favicon: 'img/favicon.ico',
 
-  // Production URL - Password protected via Vercel
+  // Production URL - Password protected via custom auth
   url: 'https://internal.binelek.io',
   baseUrl: '/',
 
@@ -28,11 +28,15 @@ const config = {
 
   customFields: {
     maintenanceMode: process.env.MAINTENANCE_MODE === 'true',
-    // Internal site is password protected via Vercel Deployment Protection
+    // Internal site is password protected via custom auth (sessionStorage)
     isInternalSite: true,
   },
 
   scripts: [
+    {
+      src: '/js/auth-check.js',
+      async: false, // Must run synchronously before page loads
+    },
     {
       src: 'https://cdn.vercel-insights.com/v1/script.js',
       defer: true,

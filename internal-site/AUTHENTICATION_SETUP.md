@@ -1,66 +1,89 @@
 # Password Protection Setup for Internal Docs
 
-This site requires authentication for access. **Vercel Deployment Protection** is the recommended method.
+This site uses custom client-side password protection via sessionStorage.
 
-## Method 1: Vercel Deployment Protection (Recommended)
+## How It Works
 
-Vercel provides built-in deployment protection that doesn't require code changes.
+1. **Auth Check Script** (`static/js/auth-check.js`)
+   - Runs on every page load before content renders
+   - Checks sessionStorage for valid authentication
+   - Redirects to `/auth.html` if not authenticated
+   - Sessions expire after 8 hours
 
-### Setup Steps:
+2. **Login Page** (`static/auth.html`)
+   - User enters password
+   - Password is checked against base64-encoded hash
+   - On success, sets sessionStorage and redirects to home
 
-1. **Go to Vercel Project Settings**
-   - Navigate to your project in Vercel dashboard
-   - Go to Settings → Deployment Protection
+## Files
 
-2. **Enable Password Protection**
-   - Select "Password Protection"
-   - Set a strong password
-   - Save settings
+- `static/auth.html` - Login page with password form
+- `static/js/auth-check.js` - Auth verification script
+- `docusaurus.config.js` - Includes auth-check.js in scripts
 
-3. **Share Credentials**
-   - Share the password with team members via secure channel (1Password, etc.)
-   - Users will be prompted for password on first visit
-   - Browser will remember authentication
+## Current Password
 
-### Advantages:
-- No code changes needed
-- Built into Vercel
-- Supports multiple password levels (Preview/Production)
-- Easy to rotate passwords
-- Works with any static site
+**Default Password:** `binelek-internal-2025`
 
----
+To generate a new password hash:
+```javascript
+// In browser console
+btoa('your-new-password')
+```
 
-## Current Configuration
+## Changing the Password
 
-**Recommended:** Use Vercel Deployment Protection (Method 1)
+1. Generate new hash: `btoa('new-password')`
+2. Edit `static/auth.html`
+3. Update `HASHED_PASSWORD` constant
+4. Redeploy the site
+5. Notify team of new password
 
-**Status:** Pending deployment configuration
+```javascript
+// In static/auth.html
+const HASHED_PASSWORD = 'bmV3LXBhc3N3b3Jk'; // btoa('new-password')
+```
 
-**URL:** https://internal.binelek.io
+## Session Configuration
 
-**Access:** Once configured, password will be shared via 1Password
+The session timeout is configured in `static/js/auth-check.js`:
 
----
+```javascript
+// Session timeout: 8 hours (in milliseconds)
+const SESSION_TIMEOUT = 8 * 60 * 60 * 1000;
+```
+
+To change timeout, modify this value and redeploy.
 
 ## Testing Authentication
 
-After setting up protection:
-
 1. Open https://internal.binelek.io in incognito window
-2. Verify password prompt appears
-3. Test with correct password → should grant access
-4. Test with wrong password → should deny access
+2. Verify login page appears
+3. Test with correct password → should redirect to docs
+4. Test with wrong password → should show error
+5. Close browser, reopen → should require login again
 
----
+## Security Notes
 
-## Rotating Passwords
+- This is client-side protection suitable for internal docs
+- Password is base64 encoded (obfuscation, not encryption)
+- For highly sensitive content, use server-side authentication
+- Sessions are stored in sessionStorage (cleared on browser close)
+- Do not use for PII or highly confidential data
 
-### Vercel Deployment Protection:
-1. Go to Settings → Deployment Protection
-2. Click "Change Password"
-3. Enter new password
-4. Save and notify team
+## Troubleshooting
+
+### Login page appears repeatedly
+- Clear sessionStorage: `sessionStorage.clear()`
+- Check browser allows sessionStorage
+
+### Password not working
+- Verify password is exactly correct (case-sensitive)
+- Check HASHED_PASSWORD matches `btoa('password')`
+
+### Auth not redirecting
+- Check `/js/auth-check.js` loads in Network tab
+- Verify script is included in docusaurus.config.js
 
 ---
 
