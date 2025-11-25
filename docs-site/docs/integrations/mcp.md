@@ -165,5 +165,4 @@ curl https://api.smb-ai-platform.com/health
 ## Support
 
 For MCP integration support:
-- [GitHub Issues](https://github.com/k5tuck/binelek-mcp-server/issues)
-- Email: mcp-support@smb-ai-platform.com
+- Email: support@binelek.io

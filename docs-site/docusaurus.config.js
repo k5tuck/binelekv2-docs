@@ -45,7 +45,6 @@ const config = {
       ({
         docs: {
           sidebarPath: './sidebars.js',
-          editUrl: 'https://github.com/k5tuck/binelekv2-docs/tree/main/docs-site/',
           showLastUpdateTime: true,
           showLastUpdateAuthor: true,
         },
@@ -107,11 +106,6 @@ const config = {
             label: 'Main Site',
             position: 'right',
           },
-          {
-            href: 'https://github.com/k5tuck/binelekv2-docs',
-            label: 'GitHub',
-            position: 'right',
-          },
         ],
       },
       footer: {
@@ -152,15 +146,15 @@ const config = {
             ],
           },
           {
-            title: 'Community',
+            title: 'Support',
             items: [
-              {
-                label: 'GitHub',
-                href: 'https://github.com/k5tuck/binelekv2-docs',
-              },
               {
                 label: 'Contact Us',
                 href: 'https://binelek.io/contact',
+              },
+              {
+                label: 'Help Center',
+                href: 'https://binelek.io/help',
               },
             ],
           },

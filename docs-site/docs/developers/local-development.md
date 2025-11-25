@@ -17,8 +17,10 @@ Guide for setting up the development environment.
 
 ### 1. Clone the Repository
 
+Contact the team at support@binelek.io for repository access.
+
 ```bash
-git clone https://github.com/k5tuck/binelekv2-smb-platform-backend.git
+git clone <repository-url>
 cd binelekv2-smb-platform-backend
 ```
 

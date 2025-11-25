@@ -241,9 +241,8 @@ async def test_classify_revenue_query(router):
 
 ## Getting Help
 
-- Open a GitHub issue for bugs
-- Use discussions for questions
-- Join our Discord for real-time help
+- Email support@binelek.io for bugs or questions
+- Check the documentation for common issues
 
 ## License
 

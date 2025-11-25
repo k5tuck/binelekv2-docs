@@ -17,9 +17,11 @@ Get the SMB AI Command Platform running locally or in production.
 
 The fastest way to get started:
 
+Contact the team at support@binelek.io for repository access.
+
 ```bash
 # Clone with submodules
-git clone --recursive https://github.com/k5tuck/binelekv2-smb-platform-backend.git
+git clone --recursive <repository-url>
 cd binelekv2-smb-platform-backend
 
 # Copy environment file
