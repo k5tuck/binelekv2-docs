@@ -9,7 +9,6 @@ const sidebars = {
       type: 'category',
       label: 'Getting Started',
       items: [
-        'getting-started/installation',
         'customers/getting-started',
       ],
     },
@@ -29,13 +28,12 @@ const sidebars = {
     },
   ],
 
-  // Developer documentation sidebar
+  // Developer documentation sidebar (for API integrators)
   developerSidebar: [
     {
       type: 'category',
-      label: 'Getting Started',
+      label: 'Overview',
       items: [
-        'developers/local-development',
         'developers/architecture',
       ],
     },
@@ -52,13 +50,6 @@ const sidebars = {
       label: 'MCP Integration',
       items: [
         'developers/mcp-integration',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Contributing',
-      items: [
-        'developers/contributing',
       ],
     },
   ],

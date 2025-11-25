@@ -108,8 +108,8 @@ function QuickLinks() {
       <div className="container">
         <h2 className={styles.sectionTitle}>Quick Links</h2>
         <div className={styles.quickLinksGrid}>
-          <Link to="/docs/getting-started/installation" className={styles.quickLink}>
-            <span>Installation Guide</span>
+          <Link to="/docs/customers/getting-started" className={styles.quickLink}>
+            <span>Getting Started</span>
           </Link>
           <Link to="/docs/modules/ops-copilot" className={styles.quickLink}>
             <span>Ops Copilot</span>
