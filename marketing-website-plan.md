@@ -43,6 +43,7 @@ Homepage
 │   └── For SaaS Companies → /solutions
 ├── Integrations
 ├── Pricing
+├── Demo ← All "Schedule a Demo" CTAs link here
 ├── Resources
 │   ├── Getting Started
 │   ├── Demo Videos
@@ -54,7 +55,7 @@ Homepage
     └── Terms of Service
 ```
 
-**Total Pages:** 15 active pages (4 Solutions industry pages redirect to single landing page at launch)
+**Total Pages:** 16 active pages (4 Solutions industry pages redirect to single landing page at launch)
 
 ---
 
@@ -485,7 +486,64 @@ Solutions ▼ (with "Coming Soon" badge)
 
 ---
 
-### 11. Getting Started (Resource)
+### 11. Demo Page
+
+**Purpose:** Central destination for all "Schedule a Demo" CTAs; provide context and capture leads
+
+**URL:** `/demo`
+
+**Sections:**
+
+1. **Hero**
+   - Headline: *"See Binelek in action"*
+   - Subheadline: *"Book a personalized demo and discover how Binelek can transform your business operations"*
+
+2. **What You'll See**
+   - 30-minute personalized walkthrough
+   - Live demo of all four modules
+   - Q&A with a product specialist
+   - Custom recommendations for your business
+
+3. **Demo Scheduling Form**
+
+   | Field | Type | Required |
+   |-------|------|----------|
+   | First Name | Text | Yes |
+   | Last Name | Text | Yes |
+   | Work Email | Email | Yes |
+   | Company Name | Text | Yes |
+   | Company Size | Dropdown (1-10, 11-50, 51-200, 200+) | Yes |
+   | Industry | Dropdown (E-commerce, Retail, Professional Services, SaaS, Other) | Yes |
+   | What interests you most? | Checkbox (Ops Copilot, Mini Foundry, Cybersecurity, Marketplace Intel) | Optional |
+   | Preferred Date/Time | Calendar picker | Yes |
+   | Anything specific you'd like to cover? | Textarea | Optional |
+
+   **Submit Button:** *"Book My Demo"*
+
+4. **What Happens Next**
+   - Confirmation email with calendar invite
+   - Reminder 24 hours before
+   - Link to join video call
+
+5. **Alternative Options**
+   - *"Prefer to explore on your own?"*
+   - Link to Demo Videos page
+   - Link to Getting Started guide
+
+6. **Trust Elements**
+   - Integration logos
+   - Security/compliance badges
+   - *"No credit card required"*
+
+7. **FAQ Preview**
+   - How long is the demo? (30 minutes)
+   - Who will I meet with? (Product specialist)
+   - Can I invite my team? (Yes, up to 5 people)
+   - What if I need to reschedule? (Easy reschedule link in confirmation)
+
+---
+
+### 13. Getting Started (Resource)
 
 **Purpose:** Reduce friction, show how easy it is
 
@@ -514,7 +572,7 @@ Solutions ▼ (with "Coming Soon" badge)
 
 ---
 
-### 12. Demo Videos (Resource)
+### 14. Demo Videos (Resource)
 
 **Purpose:** Show the product in action
 
@@ -541,7 +599,7 @@ Solutions ▼ (with "Coming Soon" badge)
 
 ---
 
-### 13. FAQ
+### 15. FAQ
 
 **Purpose:** Answer common questions, reduce support load
 
@@ -584,7 +642,7 @@ Solutions ▼ (with "Coming Soon" badge)
 
 ---
 
-### 14. About
+### 16. About
 
 **Purpose:** Build trust, humanize the brand
 
@@ -614,7 +672,7 @@ Solutions ▼ (with "Coming Soon" badge)
 
 ---
 
-### 15. Contact
+### 17. Contact
 
 **Purpose:** Provide support and sales channels
 
@@ -641,7 +699,7 @@ Solutions ▼ (with "Coming Soon" badge)
 
 ---
 
-### 16. Status Page
+### 18. Status Page
 
 **Purpose:** System status and uptime information
 
@@ -658,7 +716,7 @@ Solutions ▼ (with "Coming Soon" badge)
 
 ---
 
-### 17-18. Legal Pages
+### 19-20. Legal Pages
 
 **Privacy Policy**
 - Standard privacy policy
@@ -678,32 +736,44 @@ Solutions ▼ (with "Coming Soon" badge)
 
 ## CTA Placement Summary
 
+**All "Schedule a Demo" buttons link to `/demo`**
+
 | Page | Primary CTA | Secondary CTA |
 |------|-------------|---------------|
-| Homepage | Schedule a Demo | Watch Demo Video |
-| Why Binelek | Schedule a Demo | — |
-| Product Overview | Schedule a Demo | — |
-| Ops Copilot | Schedule a Demo | — |
-| Mini Foundry | Schedule a Demo | — |
-| Cybersecurity Scanner | Schedule a Demo | — |
-| Marketplace Intelligence | Schedule a Demo | — |
-| Solutions (placeholder) | Schedule a Demo | Get Notified |
-| Integrations | Schedule a Demo | — |
-| Pricing | Schedule a Demo | Contact Sales (Enterprise) |
-| Getting Started | Schedule a Demo | — |
-| Demo Videos | Schedule a Demo | — |
-| FAQ | Schedule a Demo | — |
-| About | Schedule a Demo | — |
-| Contact | Schedule a Demo | — |
+| Homepage | Schedule a Demo → `/demo` | Watch Demo Video |
+| Why Binelek | Schedule a Demo → `/demo` | — |
+| Product Overview | Schedule a Demo → `/demo` | — |
+| Ops Copilot | Schedule a Demo → `/demo` | — |
+| Mini Foundry | Schedule a Demo → `/demo` | — |
+| Cybersecurity Scanner | Schedule a Demo → `/demo` | — |
+| Marketplace Intelligence | Schedule a Demo → `/demo` | — |
+| Solutions (placeholder) | Schedule a Demo → `/demo` | Get Notified |
+| Integrations | Schedule a Demo → `/demo` | — |
+| Pricing | Schedule a Demo → `/demo` | Contact Sales (Enterprise) |
+| Getting Started | Schedule a Demo → `/demo` | — |
+| Demo Videos | Schedule a Demo → `/demo` | — |
+| FAQ | Schedule a Demo → `/demo` | — |
+| About | Schedule a Demo → `/demo` | — |
+| Contact | Schedule a Demo → `/demo` | — |
 
 ---
 
 ## Demo Scheduling Implementation
 
-**Options:**
-- **Option A:** Embed Calendly/Cal.com/HubSpot meetings widget
-- **Option B:** Modal with form (Name, Email, Company, Company Size, Preferred Time)
-- **Option C:** Dedicated `/demo` page with context + scheduler
+**Approach:** Dedicated `/demo` page with full context + scheduling form
+
+**Calendar Integration Options:**
+- Embed Calendly/Cal.com widget for date/time picker
+- Or use HubSpot meetings integration
+- Or build custom calendar picker with backend availability logic
+
+**Form Submission Flow:**
+1. User fills out form on `/demo` page
+2. Selects preferred date/time from calendar
+3. Submits form → creates calendar event
+4. Confirmation email sent with calendar invite (.ics)
+5. Reminder email 24 hours before demo
+6. Follow-up email if demo is missed/rescheduled
 
 ---
 
@@ -786,6 +856,7 @@ Binelek differentiates from alternatives without naming them directly:
 /solutions                  Solutions (placeholder)
 /integrations               Integrations
 /pricing                    Pricing
+/demo                       Demo Scheduling Page (all CTAs link here)
 /resources/getting-started  Getting Started
 /resources/videos           Demo Videos
 /resources/faq              FAQ
@@ -806,11 +877,11 @@ Binelek differentiates from alternatives without naming them directly:
 
 ## Launch Checklist
 
-- [ ] All 15 active pages built
+- [ ] All 16 active pages built
+- [ ] `/demo` page live with scheduling form and calendar integration
+- [ ] All "Schedule a Demo" CTAs link to `/demo`
 - [ ] Solutions landing page live with redirect from industry links
 - [ ] Status page placeholder live
-- [ ] Demo scheduling system implemented
-- [ ] All CTAs link to demo scheduler
 - [ ] Product screenshots/mockups in place
 - [ ] Demo videos embedded
 - [ ] Integration logos displayed
@@ -820,3 +891,4 @@ Binelek differentiates from alternatives without naming them directly:
 - [ ] SEO meta tags added
 - [ ] Analytics tracking installed
 - [ ] Cookie consent implemented
+- [ ] Demo confirmation/reminder emails configured
