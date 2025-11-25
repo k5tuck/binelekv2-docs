@@ -16,7 +16,10 @@ const sidebars = {
       type: 'category',
       label: 'Modules',
       items: [
-        'modules/ops-copilot',
+        'customers/modules/ops-copilot',
+        'customers/modules/mini-foundry',
+        'customers/modules/cybersecurity-scanner',
+        'customers/modules/marketplace-intel',
       ],
     },
     {

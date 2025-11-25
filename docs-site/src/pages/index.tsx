@@ -111,7 +111,7 @@ function QuickLinks() {
           <Link to="/docs/customers/getting-started" className={styles.quickLink}>
             <span>Getting Started</span>
           </Link>
-          <Link to="/docs/modules/ops-copilot" className={styles.quickLink}>
+          <Link to="/docs/customers/modules/ops-copilot" className={styles.quickLink}>
             <span>Ops Copilot</span>
           </Link>
           <Link to="/docs/api/overview" className={styles.quickLink}>

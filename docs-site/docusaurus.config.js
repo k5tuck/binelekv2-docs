@@ -116,15 +116,15 @@ const config = {
             items: [
               {
                 label: 'Getting Started',
-                to: '/docs/getting-started/quick-start',
+                to: '/docs/customers/getting-started',
               },
               {
                 label: 'API Reference',
                 to: '/docs/api/overview',
               },
               {
-                label: 'Integrations',
-                to: '/docs/integrations/overview',
+                label: 'MCP Integration',
+                to: '/docs/integrations/mcp',
               },
             ],
           },
