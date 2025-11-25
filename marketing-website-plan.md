@@ -36,11 +36,11 @@ Homepage
 │   ├── Mini Foundry
 │   ├── Cybersecurity Scanner
 │   └── Marketplace Intelligence
-├── Solutions (Coming Soon - greyed out)
-│   ├── For E-commerce
-│   ├── For Retail
-│   ├── For Professional Services
-│   └── For SaaS Companies
+├── Solutions (all redirect to Solutions Landing Page)
+│   ├── For E-commerce → /solutions
+│   ├── For Retail → /solutions
+│   ├── For Professional Services → /solutions
+│   └── For SaaS Companies → /solutions
 ├── Integrations
 ├── Pricing
 ├── Resources
@@ -54,7 +54,7 @@ Homepage
     └── Terms of Service
 ```
 
-**Total Pages:** 19 (4 Solutions pages greyed out at launch)
+**Total Pages:** 15 active pages (4 Solutions industry pages redirect to single landing page at launch)
 
 ---
 
@@ -69,12 +69,14 @@ Logo | Product ▼ | Why Binelek | Solutions ▼ | Integrations | Pricing | Reso
 ### Footer
 
 ```
-Product          Solutions           Resources        Company
-- Overview       - Coming Soon       - Getting Started - About
-- Ops Copilot                        - Demo Videos    - Contact
-- Mini Foundry                       - FAQ            - Careers
-- Security                           - Status         - Privacy
-- Marketplace                                         - Terms
+Product          Solutions              Resources        Company
+- Overview       - For E-commerce*      - Getting Started - About
+- Ops Copilot    - For Retail*          - Demo Videos    - Contact
+- Mini Foundry   - For Prof. Services*  - FAQ            - Careers
+- Security       - For SaaS*            - Status         - Privacy
+- Marketplace                                            - Terms
+
+* All Solutions links redirect to /solutions landing page
 
 [Integration logos: Shopify, QuickBooks, Stripe, HubSpot, etc.]
 [Social links]
@@ -390,13 +392,13 @@ Product          Solutions           Resources        Company
 
 ```
 Solutions ▼ (with "Coming Soon" badge)
-├── For E-commerce (greyed, not clickable)
-├── For Retail (greyed, not clickable)
-├── For Professional Services (greyed, not clickable)
-└── For SaaS Companies (greyed, not clickable)
+├── For E-commerce → redirects to /solutions
+├── For Retail → redirects to /solutions
+├── For Professional Services → redirects to /solutions
+└── For SaaS Companies → redirects to /solutions
 ```
 
-**Hover State:** *"Coming soon — schedule a demo to learn how Binelek works for your industry"*
+**Behavior:** All industry-specific links in the dropdown are clickable but redirect to the single Solutions Landing Page (`/solutions`). The landing page explains that industry-specific content is coming soon and captures email for notifications.
 
 ---
 
@@ -805,7 +807,7 @@ Binelek differentiates from alternatives without naming them directly:
 ## Launch Checklist
 
 - [ ] All 15 active pages built
-- [ ] 4 Solutions placeholder pages greyed out
+- [ ] Solutions landing page live with redirect from industry links
 - [ ] Status page placeholder live
 - [ ] Demo scheduling system implemented
 - [ ] All CTAs link to demo scheduler
