@@ -12,7 +12,7 @@ SMB AI Command Platform is a modular AI-powered SaaS platform designed specifica
 
 ## Core Modules
 
-### 🤖 Ops Copilot
+### Ops Copilot
 Automate your daily operations with AI-powered task management, email automation, and workflow orchestration.
 
 **Key Features:**
@@ -22,7 +22,7 @@ Automate your daily operations with AI-powered task management, email automation
 - CRM integration
 - Workflow automation
 
-### 📊 Mini Foundry
+### Mini Foundry
 Consolidate your business data and gain actionable insights with AI-powered analytics.
 
 **Key Features:**
@@ -32,7 +32,7 @@ Consolidate your business data and gain actionable insights with AI-powered anal
 - Revenue forecasting
 - KPI tracking
 
-### 🔒 Cybersecurity Scanner
+### Cybersecurity Scanner
 Monitor your security posture and maintain compliance with automated security checks.
 
 **Key Features:**
@@ -42,7 +42,7 @@ Monitor your security posture and maintain compliance with automated security ch
 - Security alerts
 - Access audit logs
 
-### 📈 Marketplace Intelligence
+### Marketplace Intelligence
 Stay competitive with real-time pricing intelligence and market analysis.
 
 **Key Features:**
@@ -51,41 +51,14 @@ Stay competitive with real-time pricing intelligence and market analysis.
 - Market trend detection
 - Multi-marketplace support (Amazon, Shopify, Etsy, eBay)
 
-## Architecture Overview
+## Getting Started
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                     Frontend (React PWA)                         │
-└─────────────────────────┬───────────────────────────────────────┘
-                          │
-┌─────────────────────────┴───────────────────────────────────────┐
-│                    API Gateway (Node.js)                         │
-└─────────────────────────┬───────────────────────────────────────┘
-                          │
-          ┌───────────────┼───────────────┐
-          ▼               ▼               ▼
-┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐
-│  AI Orchestrator │ │   Connectors    │ │   MCP Server    │
-│  (Python/FastAPI)│ │ (Python/FastAPI)│ │   (TypeScript)  │
-└─────────────────┘ └─────────────────┘ └─────────────────┘
-```
+Ready to streamline your business operations?
 
-## Quick Start
+[Get Started with Binelek](/docs/customers/getting-started) - Create your account and connect your first integration in minutes.
 
-Get started in minutes:
+## Need Help?
 
-```bash
-# Clone the repository
-git clone --recursive https://github.com/k5tuck/binelekv2-smb-platform-backend.git
-
-# Start with Docker
-cd binelekv2-smb-platform-backend
-cp .env.example .env
-docker-compose up -d
-```
-
-## Support
-
-- **Documentation**: You're here!
-- **GitHub Issues**: [Report bugs](https://github.com/k5tuck/binelekv2-smb-platform-backend/issues)
-- **Email**: support@smb-ai-platform.com
+- **Email**: support@binelek.io
+- **Documentation**: Browse the guides in the sidebar
+- **Live Chat**: Available in the bottom-right corner of the app

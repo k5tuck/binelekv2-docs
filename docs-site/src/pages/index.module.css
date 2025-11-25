@@ -172,10 +172,6 @@
   color: var(--ifm-color-primary);
 }
 
-.quickLinkIcon {
-  font-size: 1.25rem;
-}
-
 /* Responsive */
 @media (max-width: 768px) {
   .heroBanner {

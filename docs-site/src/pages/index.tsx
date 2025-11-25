@@ -108,20 +108,16 @@ function QuickLinks() {
       <div className="container">
         <h2 className={styles.sectionTitle}>Quick Links</h2>
         <div className={styles.quickLinksGrid}>
-          <Link to="/docs/getting-started/installation" className={styles.quickLink}>
-            <span className={styles.quickLinkIcon}>🚀</span>
-            <span>Installation Guide</span>
+          <Link to="/docs/customers/getting-started" className={styles.quickLink}>
+            <span>Getting Started</span>
           </Link>
-          <Link to="/docs/modules/ops-copilot" className={styles.quickLink}>
-            <span className={styles.quickLinkIcon}>🤖</span>
+          <Link to="/docs/customers/modules/ops-copilot" className={styles.quickLink}>
             <span>Ops Copilot</span>
           </Link>
           <Link to="/docs/api/overview" className={styles.quickLink}>
-            <span className={styles.quickLinkIcon}>📡</span>
             <span>REST API</span>
           </Link>
           <Link to="/docs/developers/mcp-integration" className={styles.quickLink}>
-            <span className={styles.quickLinkIcon}>🔗</span>
             <span>MCP Setup</span>
           </Link>
         </div>

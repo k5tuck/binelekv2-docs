@@ -8,47 +8,65 @@ The SMB AI Command Platform uses a hybrid microservices architecture combining N
 
 ## System Architecture
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                              Clients                                         │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐ │
-│  │   Web App   │  │  Mobile App │  │   MCP CLI   │  │ Third-party Apps    │ │
-│  │  (React)    │  │    (PWA)    │  │  (Claude)   │  │    (via API)        │ │
-│  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘  └──────────┬──────────┘ │
-└─────────┼────────────────┼────────────────┼────────────────────┼────────────┘
-          │                │                │                    │
-          └────────────────┴────────────────┴────────────────────┘
-                                    │
-                                    ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                            API Gateway                                       │
-│                      (Node.js/TypeScript + Fastify)                         │
-│  ┌───────────────┐  ┌───────────────┐  ┌───────────────┐  ┌──────────────┐ │
-│  │ Authentication│  │ Rate Limiting │  │ Tenant Routing│  │   Logging    │ │
-│  └───────────────┘  └───────────────┘  └───────────────┘  └──────────────┘ │
-└─────────────────────────────────┬───────────────────────────────────────────┘
-                                  │
-        ┌─────────────────────────┼─────────────────────────┐
-        ▼                         ▼                         ▼
-┌───────────────────┐  ┌───────────────────┐  ┌───────────────────┐
-│   AI Orchestrator │  │    Connectors     │  │     Modules       │
-│ (Python/FastAPI)  │  │ (Python/FastAPI)  │  │  (Future services)│
-├───────────────────┤  ├───────────────────┤  ├───────────────────┤
-│ - LLM Providers   │  │ - Shopify         │  │ - Ops Copilot     │
-│ - Query Router    │  │ - Stripe          │  │ - Mini Foundry    │
-│ - Task Planner    │  │ - QuickBooks      │  │ - Security Scanner│
-│ - Tool Execution  │  │ - HubSpot         │  │ - Marketplace     │
-└─────────┬─────────┘  └─────────┬─────────┘  └─────────┬─────────┘
-          │                      │                      │
-          └──────────────────────┼──────────────────────┘
-                                 ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                            Data Layer                                        │
-│  ┌───────────────┐  ┌───────────────┐  ┌───────────────┐  ┌──────────────┐ │
-│  │  PostgreSQL   │  │     Redis     │  │     Kafka     │  │    Qdrant    │ │
-│  │  (Primary DB) │  │    (Cache)    │  │   (Events)    │  │  (Vectors)   │ │
-│  └───────────────┘  └───────────────┘  └───────────────┘  └──────────────┘ │
-└─────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph Clients["Client Applications"]
+        direction LR
+        WEB["Web App<br/>(React)"]
+        MOBILE["Mobile<br/>(PWA)"]
+        MCPCLI["MCP CLI<br/>(Claude)"]
+        THIRD["Third-party<br/>(via API)"]
+    end
+
+    subgraph Gateway["API Gateway - Node.js/TypeScript + Fastify"]
+        direction LR
+        AUTH["Authentication"]
+        RATE["Rate Limiting"]
+        TENANT["Tenant Routing"]
+        LOG["Logging"]
+    end
+
+    subgraph Services["Backend Services"]
+        direction LR
+        subgraph AI["AI Orchestrator<br/>(Python/FastAPI)"]
+            LLM["LLM Providers"]
+            ROUTER["Query Router"]
+            PLANNER["Task Planner"]
+            EXEC["Tool Execution"]
+        end
+
+        subgraph CONN["Connectors<br/>(Python/FastAPI)"]
+            SHOP["Shopify"]
+            STRIPE["Stripe"]
+            QB["QuickBooks"]
+            HUB["HubSpot"]
+        end
+
+        subgraph MODULES["Modules"]
+            OPS["Ops Copilot"]
+            MINI["Mini Foundry"]
+            SEC["Security Scanner"]
+            MARKET["Marketplace"]
+        end
+    end
+
+    subgraph Data["Data Layer"]
+        direction LR
+        PG["PostgreSQL<br/>Primary DB"]
+        REDIS["Redis<br/>Cache"]
+        KAFKA["Kafka<br/>Events"]
+        QDRANT["Qdrant<br/>Vectors"]
+    end
+
+    Clients --> Gateway
+    Gateway --> Services
+    Services --> Data
+
+    style Gateway fill:#0ea5e9,color:#fff
+    style AI fill:#8b5cf6,color:#fff
+    style CONN fill:#10b981,color:#fff
+    style MODULES fill:#f59e0b,color:#fff
+    style Data fill:#0369a1,color:#fff
 ```
 
 ## Component Details

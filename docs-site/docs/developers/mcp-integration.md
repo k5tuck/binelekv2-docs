@@ -210,25 +210,6 @@ Add to your Claude Desktop configuration:
 }
 ```
 
-### Running Locally
-
-```bash
-# Clone the repository
-git clone https://github.com/k5tuck/binelekv2-smb-platform-backend.git
-cd binelekv2-smb-platform-backend/mcp-server
-
-# Install dependencies
-npm install
-
-# Create .env file
-cp .env.example .env
-# Edit .env with your credentials
-
-# Build and run
-npm run build
-npm start
-```
-
 ## Authentication
 
 The MCP server requires:
