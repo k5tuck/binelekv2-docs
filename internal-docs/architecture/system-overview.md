@@ -14,67 +14,91 @@ The SMB AI Command Platform is a multi-tenant SaaS application that provides AI-
 
 ## System Architecture Diagram
 
-```
-                                    ┌─────────────────────────────────────┐
-                                    │           Load Balancer             │
-                                    │         (AWS ALB / CloudFlare)      │
-                                    └─────────────────┬───────────────────┘
-                                                      │
-                    ┌─────────────────────────────────┼─────────────────────────────────┐
-                    │                                 │                                 │
-              ┌─────▼─────┐                    ┌──────▼──────┐                   ┌──────▼──────┐
-              │  Web App  │                    │  Mobile App │                   │  MCP Server │
-              │  (React)  │                    │    (PWA)    │                   │  (Claude)   │
-              └─────┬─────┘                    └──────┬──────┘                   └──────┬──────┘
-                    │                                 │                                 │
-                    └─────────────────────────────────┼─────────────────────────────────┘
-                                                      │
-                                    ┌─────────────────▼───────────────────┐
-                                    │           API Gateway               │
-                                    │     (Node.js/TypeScript + Fastify)  │
-                                    │                                     │
-                                    │  • JWT Authentication               │
-                                    │  • Rate Limiting (100 req/min)      │
-                                    │  • Tenant Context Extraction        │
-                                    │  • Request Routing                  │
-                                    │  • Response Transformation          │
-                                    └────────────────┬────────────────────┘
-                                                     │
-                ┌────────────────────────────────────┼────────────────────────────────────┐
-                │                                    │                                    │
-     ┌──────────▼──────────┐            ┌───────────▼───────────┐            ┌───────────▼───────────┐
-     │   AI Orchestrator   │            │      Connectors       │            │   Module Services     │
-     │  (Python/FastAPI)   │            │   (Python/FastAPI)    │            │     (Planned)         │
-     │                     │            │                       │            │                       │
-     │  • LLM Providers    │            │  • Shopify            │            │  • Ops Copilot        │
-     │  • Query Router     │            │  • Stripe             │            │  • Mini Foundry       │
-     │  • Task Planner     │            │  • QuickBooks         │            │  • Security Scanner   │
-     │  • Tool Executor    │            │  • HubSpot            │            │  • Marketplace Intel  │
-     └──────────┬──────────┘            │  • Gmail              │            └───────────────────────┘
-                │                       │  • OAuth Flows        │
-                │                       └───────────┬───────────┘
-                │                                   │
-                └───────────────────────────────────┘
-                                    │
-        ┌───────────────────────────┼───────────────────────────┐
-        │                           │                           │
-┌───────▼───────┐          ┌────────▼────────┐         ┌────────▼────────┐
-│  PostgreSQL   │          │     Redis       │         │     Qdrant      │
-│  (Primary DB) │          │    (Cache)      │         │   (Vectors)     │
-│               │          │                 │         │                 │
-│  • Users      │          │  • Sessions     │         │  • Embeddings   │
-│  • Tenants    │          │  • Rate Limits  │         │  • Semantic     │
-│  • Data       │          │  • Query Cache  │         │    Search       │
-└───────────────┘          └─────────────────┘         └─────────────────┘
-        │
-┌───────▼───────┐
-│     Kafka     │
-│   (Events)    │
-│               │
-│  • Data Sync  │
-│  • Webhooks   │
-│  • Audit Log  │
-└───────────────┘
+```mermaid
+flowchart TB
+    subgraph LB["☁️ Load Balancer"]
+        ALB["AWS ALB / CloudFlare"]
+    end
+
+    subgraph Clients["🖥️ Client Applications"]
+        direction LR
+        WEB["🌐 Web App<br/>(React)"]
+        MOBILE["📱 Mobile App<br/>(PWA)"]
+        MCPS["🤖 MCP Server<br/>(Claude)"]
+    end
+
+    subgraph Gateway["🚪 API Gateway - Node.js/TypeScript + Fastify"]
+        GW_AUTH["🔐 JWT Authentication"]
+        GW_RATE["⏱️ Rate Limiting (100 req/min)"]
+        GW_TENANT["🏢 Tenant Context Extraction"]
+        GW_ROUTE["🔀 Request Routing"]
+        GW_TRANS["📤 Response Transformation"]
+    end
+
+    subgraph Services["⚙️ Backend Services"]
+        subgraph AI["🧠 AI Orchestrator<br/>(Python/FastAPI)"]
+            AI_LLM["LLM Providers"]
+            AI_ROUTER["Query Router"]
+            AI_PLAN["Task Planner"]
+            AI_EXEC["Tool Executor"]
+        end
+
+        subgraph CONN["🔌 Connectors<br/>(Python/FastAPI)"]
+            C_SHOP["Shopify"]
+            C_STRIPE["Stripe"]
+            C_QB["QuickBooks"]
+            C_HUB["HubSpot"]
+            C_GMAIL["Gmail"]
+            C_OAUTH["OAuth Flows"]
+        end
+
+        subgraph MODS["📦 Module Services<br/>(Planned)"]
+            M_OPS["Ops Copilot"]
+            M_MINI["Mini Foundry"]
+            M_SEC["Security Scanner"]
+            M_MARKET["Marketplace Intel"]
+        end
+    end
+
+    subgraph Data["💾 Data Layer"]
+        subgraph PG["🐘 PostgreSQL"]
+            PG_USERS["Users"]
+            PG_TENANTS["Tenants"]
+            PG_DATA["Data"]
+        end
+
+        subgraph REDIS["⚡ Redis"]
+            R_SESS["Sessions"]
+            R_RATE["Rate Limits"]
+            R_CACHE["Query Cache"]
+        end
+
+        subgraph QDRANT["🔍 Qdrant"]
+            Q_EMB["Embeddings"]
+            Q_SEM["Semantic Search"]
+        end
+
+        subgraph KAFKA["📨 Kafka"]
+            K_SYNC["Data Sync"]
+            K_HOOK["Webhooks"]
+            K_AUDIT["Audit Log"]
+        end
+    end
+
+    LB --> Clients
+    Clients --> Gateway
+    Gateway --> Services
+    Services --> Data
+
+    style LB fill:#64748b,color:#fff
+    style Gateway fill:#0ea5e9,color:#fff
+    style AI fill:#8b5cf6,color:#fff
+    style CONN fill:#10b981,color:#fff
+    style MODS fill:#f59e0b,color:#fff
+    style PG fill:#336791,color:#fff
+    style REDIS fill:#dc382d,color:#fff
+    style QDRANT fill:#24b47e,color:#fff
+    style KAFKA fill:#231f20,color:#fff
 ```
 
 ## Service Responsibilities
