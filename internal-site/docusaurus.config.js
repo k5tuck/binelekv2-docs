@@ -37,11 +37,6 @@ const config = {
       src: '/js/auth-check.js',
       async: false, // Must run synchronously before page loads
     },
-    {
-      src: 'https://cdn.vercel-insights.com/v1/script.js',
-      defer: true,
-      'data-endpoint': '/api/_vercel/insights/event',
-    },
   ],
 
   presets: [
