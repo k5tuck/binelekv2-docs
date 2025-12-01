@@ -235,6 +235,264 @@ Authorization: Bearer <token>
 X-Tenant-Id: <tenant_id>
 ```
 
+### Predictive Analytics
+
+AI-powered forecasting and prediction capabilities.
+
+#### Get Overview
+
+```http
+GET /api/modules/predictive-analytics/overview
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "activePredictions": 12,
+    "dataSources": 5,
+    "averageAccuracy": 91.5,
+    "recentPredictions": [
+      {
+        "id": "pred_123",
+        "templateName": "Sales Forecast",
+        "status": "completed",
+        "accuracy": 94.2
+      }
+    ]
+  }
+}
+```
+
+#### List Prediction Templates
+
+```http
+GET /api/modules/predictive-analytics/templates
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+```
+
+**Query Parameters:**
+- `category` - Filter by category (sales, inventory, churn, custom)
+- `search` - Search templates by name
+- `page` - Page number (default: 1)
+- `limit` - Items per page (default: 20)
+
+#### Create Prediction
+
+```http
+POST /api/modules/predictive-analytics/predictions
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+Content-Type: application/json
+
+{
+  "templateId": "template_sales_forecast",
+  "parameters": {
+    "timeRange": "next_30_days",
+    "granularity": "daily",
+    "confidenceLevel": 0.95
+  },
+  "dataSourceIds": ["ds_shopify", "ds_stripe"]
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "id": "pred_456",
+    "status": "processing",
+    "estimatedCompletionTime": "2024-01-15T10:35:00Z"
+  }
+}
+```
+
+#### Get Prediction Results
+
+```http
+GET /api/modules/predictive-analytics/predictions/:id
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "id": "pred_456",
+    "status": "completed",
+    "templateName": "Sales Forecast",
+    "results": {
+      "predictions": [
+        { "date": "2024-01-16", "value": 12500, "lower": 11800, "upper": 13200 },
+        { "date": "2024-01-17", "value": 13200, "lower": 12400, "upper": 14000 }
+      ],
+      "summary": {
+        "totalPredicted": 385000,
+        "averageDaily": 12833,
+        "trend": "increasing"
+      }
+    },
+    "accuracy": {
+      "score": 94.2,
+      "mape": 5.8,
+      "rmse": 1250
+    }
+  }
+}
+```
+
+#### Natural Language Query (Ask)
+
+```http
+POST /api/modules/predictive-analytics/ask
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+Content-Type: application/json
+
+{
+  "question": "What will my sales be next month?",
+  "context": {
+    "dataSourceIds": ["ds_shopify"],
+    "conversationId": "conv_789"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "answer": "Based on your historical data and current trends, I predict your sales next month will be approximately $142,500.",
+    "prediction": {
+      "value": 142500,
+      "confidence": 0.92,
+      "range": { "lower": 135000, "upper": 150000 }
+    },
+    "factors": [
+      { "name": "Seasonal trend", "impact": "positive", "contribution": 0.45 },
+      { "name": "Recent growth", "impact": "positive", "contribution": 0.35 }
+    ],
+    "conversationId": "conv_789"
+  }
+}
+```
+
+#### List Data Sources
+
+```http
+GET /api/modules/predictive-analytics/data-sources
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+```
+
+#### Create Custom Connector
+
+```http
+POST /api/modules/predictive-analytics/data-sources/custom-connectors
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+Content-Type: application/json
+
+{
+  "name": "my_api_connector",
+  "displayName": "My Custom API",
+  "connectionType": "rest_api",
+  "config": {
+    "baseUrl": "https://api.example.com/v1",
+    "authType": "bearer_token",
+    "authConfig": {
+      "token": "your-api-token"
+    }
+  },
+  "fieldMappings": [
+    {
+      "sourceField": "order_total",
+      "targetField": "revenue",
+      "dataType": "number"
+    }
+  ]
+}
+```
+
+#### Detect API Schema
+
+Automatically detect fields and types from an API endpoint.
+
+```http
+POST /api/modules/predictive-analytics/data-sources/detect-schema
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+Content-Type: application/json
+
+{
+  "url": "https://api.example.com/v1/orders",
+  "method": "GET",
+  "headers": {
+    "Authorization": "Bearer token123"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "detectedFields": [
+      { "name": "id", "type": "string", "path": "data[].id" },
+      { "name": "total", "type": "number", "path": "data[].total" },
+      { "name": "created_at", "type": "datetime", "path": "data[].created_at" }
+    ],
+    "sampleData": {},
+    "openApiSpec": "https://api.example.com/openapi.json"
+  }
+}
+```
+
+#### Get Model Accuracy
+
+```http
+GET /api/modules/predictive-analytics/accuracy
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+```
+
+**Query Parameters:**
+- `templateId` - Filter by template
+- `startDate` - Start of date range
+- `endDate` - End of date range
+
+#### Train Model
+
+Manually trigger model training for a template.
+
+```http
+POST /api/modules/predictive-analytics/train
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+Content-Type: application/json
+
+{
+  "templateId": "template_sales_forecast",
+  "dataSourceIds": ["ds_shopify", "ds_stripe"],
+  "trainingConfig": {
+    "algorithm": "xgboost",
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6
+    }
+  }
+}
+```
+
 ## Connectors
 
 ### List Connectors
