@@ -30,14 +30,6 @@ const config = {
     maintenanceMode: process.env.MAINTENANCE_MODE === 'true',
   },
 
-  scripts: [
-    {
-      src: 'https://cdn.vercel-insights.com/v1/script.js',
-      defer: true,
-      'data-endpoint': '/api/_vercel/insights/event',
-    },
-  ],
-
   presets: [
     [
       'classic',
