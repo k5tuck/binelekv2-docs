@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-The SMB AI Command Platform is an AI-powered business operations platform designed for small and medium businesses. It provides intelligent automation, data analytics, security monitoring, and competitive intelligence through a modular architecture.
+The SMB AI Command Platform is an AI-powered business operations platform designed for small and medium businesses. It provides intelligent automation, data analytics, security monitoring, and competitive intelligence through a **hub-based architecture** with unified data lineage and causal analytics.
 
 ---
 
@@ -13,10 +13,29 @@ The SMB AI Command Platform is an AI-powered business operations platform design
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                              FRONTEND (React/TypeScript PWA)                 │
-│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐            │
-│  │ Ops Copilot │ │Mini Foundry │ │  Security   │ │ Marketplace │            │
-│  │   Module    │ │   Module    │ │   Scanner   │ │    Intel    │            │
-│  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘            │
+│                                                                              │
+│  ┌────────────────────────────────────────────────────────────────────────┐ │
+│  │                         HUB ARCHITECTURE                                │ │
+│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                     │ │
+│  │  │ Insights Hub│  │ Action Hub  │  │Data Lineage │                     │ │
+│  │  │ - Forecasts │  │ - Simulator │  │ - Provenance│                     │ │
+│  │  │ - Customers │  │ - Planner   │  │ - Quality   │                     │ │
+│  │  │ - Segments  │  │ - Automations│ │ - Flow Viz  │                     │ │
+│  │  │ - Market    │  │ - History   │  │             │                     │ │
+│  │  └─────────────┘  └─────────────┘  └─────────────┘                     │ │
+│  └────────────────────────────────────────────────────────────────────────┘ │
+│                                                                              │
+│  ┌────────────────────────────────────────────────────────────────────────┐ │
+│  │                         LEGACY MODULES                                  │ │
+│  │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐      │ │
+│  │  │ Ops Copilot │ │Mini Foundry │ │  Security   │ │ Marketplace │      │ │
+│  │  │   Module    │ │   Module    │ │   Scanner   │ │    Intel    │      │ │
+│  │  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘      │ │
+│  │  ┌─────────────┐                                                       │ │
+│  │  │ Predictive  │                                                       │ │
+│  │  │ Analytics   │                                                       │ │
+│  │  └─────────────┘                                                       │ │
+│  └────────────────────────────────────────────────────────────────────────┘ │
 └─────────────────────────────────────────────────────────────────────────────┘
                                       │
                                       ▼
@@ -26,6 +45,11 @@ The SMB AI Command Platform is an AI-powered business operations platform design
 │  │     Auth     │ │   Routing    │ │ Rate Limit   │ │    Tenant    │        │
 │  │  Middleware  │ │    Proxy     │ │  Middleware  │ │   Context    │        │
 │  └──────────────┘ └──────────────┘ └──────────────┘ └──────────────┘        │
+│  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐                         │
+│  │  Hub Routes  │ │ Data Lineage │ │ Segmentation │                         │
+│  │  (insights,  │ │   Routes     │ │   Routes     │                         │
+│  │   action)    │ │              │ │              │                         │
+│  └──────────────┘ └──────────────┘ └──────────────┘                         │
 └─────────────────────────────────────────────────────────────────────────────┘
                                       │
                     ┌─────────────────┼─────────────────┐
@@ -34,10 +58,11 @@ The SMB AI Command Platform is an AI-powered business operations platform design
 │    AI ORCHESTRATOR    │ │    CONNECTORS     │ │   MARKETPLACE     │
 │   (Python/FastAPI)    │ │  (Python/FastAPI) │ │    SCRAPER        │
 │                       │ │                   │ │  (Python/FastAPI) │
-│ - LLM Query Engine    │ │ - OAuth Manager   │ │                   │
-│ - Agent Framework     │ │ - Data Sync       │ │ - Price Tracker   │
-│ - Tool Executor       │ │ - Transformers    │ │ - Competitor      │
-│ - Workflow Engine     │ │                   │ │   Discovery       │
+│ - LLM Query Engine    │ │ - Plugin System   │ │                   │
+│ - Agent Framework     │ │ - OAuth Manager   │ │ - Price Tracker   │
+│ - Tool Executor       │ │ - Data Sync       │ │ - Competitor      │
+│ - Workflow Engine     │ │ - Transformers    │ │   Discovery       │
+│ - Prediction Service  │ │                   │ │                   │
 └───────────────────────┘ └───────────────────┘ └───────────────────┘
                     │                 │                 │
                     └─────────────────┴─────────────────┘
@@ -49,6 +74,15 @@ The SMB AI Command Platform is an AI-powered business operations platform design
 │  │  PostgreSQL  │ │    Redis     │ │    Kafka     │ │    Qdrant    │        │
 │  │   Primary    │ │    Cache     │ │   Events     │ │   Vectors    │        │
 │  └──────────────┘ └──────────────┘ └──────────────┘ └──────────────┘        │
+│                                                                              │
+│  ┌────────────────────────────────────────────────────────────────────────┐ │
+│  │                    UNIFIED DATA SCHEMA                                  │ │
+│  │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐       │ │
+│  │  │  Unified    │ │   Causal    │ │  Customer   │ │   Data      │       │ │
+│  │  │  Customers  │ │ Relationships│ │  Segments   │ │  Quality    │       │ │
+│  │  │  /Orders    │ │ /Simulations│ │             │ │  Scores     │       │ │
+│  │  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘       │ │
+│  └────────────────────────────────────────────────────────────────────────┘ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -61,6 +95,68 @@ The SMB AI Command Platform is an AI-powered business operations platform design
 | `binelekv2-smb-platform-backend` | API Gateway + Python Services | Node.js/Fastify, Python/FastAPI |
 | `binelekv2-smb-platform-frontend` | Web Application | React, TypeScript, TailwindCSS |
 | `binelekv2-docs` | Documentation (submodule) | Markdown, Docusaurus |
+
+---
+
+## Hub Architecture (NEW)
+
+### Insights Hub (`/insights`)
+**Purpose:** Centralized business insights, analytics, and reporting
+
+**Tabs:**
+1. **Overview** - Key metrics, trends, alerts
+2. **Forecasts** - Predictive analytics integration
+3. **Customers** - Customer health, LTV, churn analysis
+4. **Segments** - Customer segmentation visualization
+5. **Market Intel** - Competitor and pricing intelligence
+6. **Reports** - Report generation and scheduling
+
+**Key Endpoints:**
+```
+GET /api/hubs/insights/overview
+GET /api/hubs/insights/forecasts
+GET /api/hubs/insights/customers
+GET /api/hubs/insights/segments
+GET /api/hubs/insights/alerts
+```
+
+### Action Hub (`/action`)
+**Purpose:** Business actions, simulations, and automation
+
+**Tabs:**
+1. **Simulator** - Causal graph "what-if" scenarios
+2. **Planner** - Business initiative tradeoff analysis
+3. **Automations** - Ops Copilot integration
+4. **History** - Action history timeline
+
+**Key Endpoints:**
+```
+GET /api/hubs/action/simulator/relationships
+POST /api/hubs/action/simulator/simulate
+GET /api/hubs/action/planner/initiatives
+POST /api/hubs/action/planner/analyze
+GET /api/hubs/action/automations
+GET /api/hubs/action/history
+```
+
+### Data Lineage (`/data-lineage`)
+**Purpose:** Data provenance, quality tracking, and flow visualization
+
+**Features:**
+- Data source tracking
+- Quality scores (accuracy, completeness, freshness)
+- Visual flow diagrams
+- Confidence indicators
+- Entity-level provenance
+
+**Key Endpoints:**
+```
+GET /api/data-lineage/sources
+GET /api/data-lineage/quality-scores
+GET /api/data-lineage/flow
+GET /api/data-lineage/entity/:type/:id
+GET /api/data-lineage/trends
+```
 
 ---
 
@@ -150,6 +246,90 @@ GET/POST /api/modules/marketplace-intel/products
 POST /api/modules/marketplace-intel/discover
 ```
 
+### 5. Predictive Analytics (NEW)
+**Purpose:** AI-powered forecasting with 518 prediction templates
+
+**Features:**
+- Industry-specific prediction templates (19 industries)
+- Time-series forecasting
+- Anomaly detection
+- Custom model training
+
+**Database Tables:**
+- `prediction_templates` - 518 pre-configured templates
+- `prediction_history` - User prediction results
+- `model_configs` - Custom model configurations
+
+**Key Endpoints:**
+```
+GET /api/modules/predictive-analytics/templates
+GET /api/modules/predictive-analytics/templates/:templateId
+POST /api/modules/predictive-analytics/predict
+GET /api/modules/predictive-analytics/history
+```
+
+---
+
+## Three-Layer Data Architecture
+
+### Layer 1: Connector Layer
+Raw data ingestion from external sources via plugins.
+
+**Supported Connectors:**
+| Category | Connectors |
+|----------|------------|
+| Commerce | Shopify, Stripe, Square |
+| CRM | HubSpot, Zoho |
+| Finance | QuickBooks, Xero |
+| Email | Gmail, Outlook |
+
+### Layer 2: Normalization Layer ("Rosetta Stone")
+Transforms connector-specific data into unified schema.
+
+**Unified Tables:**
+- `unified_customers` - Normalized customer data
+- `unified_orders` - Normalized order data
+- `unified_transactions` - Normalized financial transactions
+- `unified_products` - Normalized product catalog
+
+### Layer 3: Semantic/Intelligent Layer
+AI-enriched data with causal relationships and predictions.
+
+**Intelligent Tables:**
+- `business_events` - Timeline of business events
+- `causal_relationships` - Cause-effect relationships between metrics
+- `causal_simulations` - What-if scenario results
+- `customer_segments` - AI-generated customer segments
+- `data_quality_scores` - Per-entity quality metrics
+
+---
+
+## Causal Simulation Algorithm
+
+The Action Hub Simulator uses BFS-based propagation:
+
+```
+1. User modifies a metric (e.g., "Increase marketing spend by 20%")
+2. System identifies connected metrics via causal_relationships table
+3. BFS traverses the causal graph
+4. Each hop applies:
+   - Effect multiplier (positive/negative correlation)
+   - Confidence degradation (15% per hop)
+   - Lag time estimation
+5. Results aggregated and displayed in waterfall chart
+```
+
+---
+
+## Customer Segmentation
+
+**Segmentation Explorer** provides 2D visualization of customer clusters:
+
+- **RFM Segmentation** - Recency, Frequency, Monetary value
+- **Behavioral Clustering** - Purchase patterns, engagement
+- **Predictive Segments** - Churn risk, LTV potential
+- **Custom Dimensions** - User-defined axes
+
 ---
 
 ## Service Architecture
@@ -166,9 +346,11 @@ POST /api/modules/marketplace-intel/discover
 
 **Key Files:**
 - `src/routes/auth.ts` - Authentication endpoints
-- `src/routes/modules.ts` - Module-specific routing
-- `src/routes/proxy.ts` - Service proxy
-- `src/services/auth.ts` - Auth business logic
+- `src/routes/hubs/insights.ts` - Insights Hub routes
+- `src/routes/hubs/action.ts` - Action Hub routes
+- `src/routes/data-lineage.ts` - Data lineage routes
+- `src/routes/segmentation.ts` - Customer segmentation routes
+- `src/routes/modules.ts` - Legacy module routing
 - `src/middleware/tenant.ts` - Multi-tenant context
 
 ### AI Orchestrator (Python/FastAPI)
@@ -179,13 +361,13 @@ POST /api/modules/marketplace-intel/discover
 - Agent framework for complex tasks
 - Tool execution coordination
 - Workflow engine
+- Prediction service
 
 **Key Files:**
 - `app/routers/query.py` - LLM query endpoints
-- `app/routers/llm.py` - LLM configuration
+- `app/routers/predictions.py` - Prediction endpoints
 - `app/services/query_service.py` - Multi-provider LLM
 - `app/services/orchestrator.py` - Agent orchestration
-- `app/services/task_service.py` - Task/workflow management
 
 ### Connectors Service (Python/FastAPI)
 **Location:** `/services/connectors/`
@@ -194,28 +376,14 @@ POST /api/modules/marketplace-intel/discover
 - OAuth flow management
 - Data synchronization from external services
 - Credential encryption and storage
-- Data transformation
+- Data transformation to unified schema
 
-**Supported Connectors:**
-| Category | Connectors |
-|----------|------------|
-| Commerce | Shopify, Stripe, Square |
-| CRM | HubSpot, Zoho |
-| Finance | QuickBooks, Xero |
-| Email | Gmail, Outlook |
-
-**Key Files:**
-- `app/main.py` - Connector endpoints
-- `app/schemas/` - Pydantic schemas for each connector
-
-### Marketplace Scraper Service (Python/FastAPI)
-**Location:** `/services/marketplace-scraper/`
-
-**Responsibilities:**
-- Automated price fetching from marketplaces
-- Competitor discovery
-- Scheduled data collection
-- Rate-limited scraping
+**Plugin System:**
+- `app/plugins/shopify.py` - Shopify connector
+- `app/plugins/stripe.py` - Stripe connector
+- `app/plugins/hubspot.py` - HubSpot connector
+- `app/plugins/gmail.py` - Gmail connector
+- `app/plugins/quickbooks.py` - QuickBooks connector
 
 ---
 
@@ -235,30 +403,29 @@ POST /api/modules/marketplace-intel/discover
       │                     │
       │                     │
       ▼                     ▼
-┌─────────────┐       ┌─────────────┐
-│ Connector   │       │  Workflow   │
-│             │       │             │
-│ - type      │       │ - trigger   │
-│ - config    │       │ - steps     │
-│ - oauth     │       │ - is_active │
-└─────────────┘       └─────────────┘
+┌─────────────┐       ┌─────────────┐       ┌─────────────┐
+│ Connector   │       │  Workflow   │       │  Segment    │
+│             │       │             │       │             │
+│ - type      │       │ - trigger   │       │ - name      │
+│ - config    │       │ - steps     │       │ - criteria  │
+│ - oauth     │       │ - is_active │       │ - customers │
+└─────────────┘       └─────────────┘       └─────────────┘
 ```
 
-### SQLAlchemy Models
-**Location:** `/services/ai-orchestrator/app/models/`
+### Unified Schema Tables (NEW)
 
-| Model | Table | Purpose |
-|-------|-------|---------|
-| User | users | User accounts |
-| Tenant | tenants | Multi-tenant orgs |
-| Task | tasks | Ops Copilot tasks |
-| Workflow | workflows | Automation definitions |
-| Dashboard | dashboards | Mini Foundry dashboards |
-| Competitor | competitors | Marketplace competitors |
-| TrackedProduct | tracked_products | Price-tracked products |
-| SecurityIssue | security_issues | Security vulnerabilities |
-| LLMApiKey | llm_api_keys | Encrypted API keys |
-| ConnectorConfig | connector_configs | Connector settings |
+| Table | Purpose |
+|-------|---------|
+| unified_customers | Normalized customer data from all connectors |
+| unified_orders | Normalized order/transaction data |
+| unified_transactions | Financial transaction records |
+| unified_products | Product catalog across platforms |
+| business_events | Timeline of significant business events |
+| causal_relationships | Metric cause-effect relationships |
+| causal_simulations | What-if scenario simulation results |
+| customer_segments | AI-generated customer segments |
+| business_initiatives | Planned business actions with tradeoffs |
+| data_quality_scores | Per-entity data quality metrics |
 
 ---
 
@@ -274,13 +441,6 @@ POST /api/modules/marketplace-intel/discover
 6. Server validates refresh_token → Returns new access_token
 ```
 
-### Token Refresh (Frontend)
-The frontend API client (`src/services/api.ts`) implements automatic token refresh:
-- Intercepts 401 responses
-- Calls refresh endpoint
-- Retries original request
-- Deduplicates concurrent refresh requests
-
 ### Multi-Tenancy
 - Every request includes `X-Tenant-ID` header
 - Middleware validates tenant access
@@ -289,154 +449,29 @@ The frontend API client (`src/services/api.ts`) implements automatic token refre
 
 ---
 
-## Connector Integration
-
-### OAuth Flow
-```
-1. User clicks "Connect" → GET /api/connectors/oauth/{type}/authorize
-2. Redirect to provider OAuth page
-3. User grants access
-4. Provider redirects to callback → POST /api/connectors/oauth/{type}/callback
-5. Exchange code for tokens
-6. Store encrypted tokens in database
-7. Begin initial data sync
-```
-
-### Data Sync
-- Full sync on initial connection
-- Incremental sync via webhooks or polling
-- Data transformed to common schema
-- Stored in PostgreSQL with tenant isolation
-
----
-
-## Marketplace Intelligence
-
-### Price Tracking System
-```
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│   Scheduler     │────▶│   Scraper       │────▶│   Database      │
-│   (APScheduler) │     │   (Playwright)  │     │   (PostgreSQL)  │
-└─────────────────┘     └─────────────────┘     └─────────────────┘
-        │                       │
-        ▼                       ▼
-   ┌─────────┐           ┌─────────────┐
-   │  Cron   │           │  Rate Limit │
-   │  Jobs   │           │   Queue     │
-   └─────────┘           └─────────────┘
-```
-
-### Competitor Discovery
-
-**Location-Based Discovery:**
-- Google Places API for nearby businesses
-- Yelp Fusion API for local competitors
-- Configurable radius (1-50 miles)
-
-**Similarity-Based Discovery:**
-- Product category matching
-- Business type classification
-- Keyword/description similarity
-- Market segment analysis
-
----
-
-## Security Model
-
-### Data Encryption
-- API keys encrypted with Fernet (AES-128-CBC)
-- OAuth tokens encrypted at rest
-- Database connection over SSL
-- HTTPS enforced in production
-
-### Access Control
-- Role-based access control (RBAC)
-- Roles: `admin`, `member`, `viewer`
-- Module-level permissions
-- Tenant isolation
-
-### Audit Logging
-- All auth events logged
-- Data access tracked
-- Admin actions recorded
-- 90-day retention
-
----
-
-## Deployment Architecture
-
-### Docker Services
-```yaml
-services:
-  gateway:        # Node.js API Gateway
-  ai-orchestrator: # Python AI Service
-  connectors:     # Python Connector Service
-  marketplace-scraper: # Python Scraper Service
-  postgres:       # Primary Database
-  redis:          # Cache/Sessions
-  kafka:          # Event Streaming
-  qdrant:         # Vector Database
-```
-
-### Environment Variables
-| Variable | Purpose |
-|----------|---------|
-| DATABASE_URL | PostgreSQL connection |
-| REDIS_URL | Redis connection |
-| JWT_SECRET | Token signing key |
-| ENCRYPTION_KEY | Fernet encryption key |
-| OPENAI_API_KEY | OpenAI API access |
-| ANTHROPIC_API_KEY | Anthropic API access |
-
----
-
-## API Reference
-
-### Authentication
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| /api/auth/login | POST | User login |
-| /api/auth/register | POST | User registration |
-| /api/auth/refresh | POST | Refresh access token |
-| /api/auth/logout | POST | Invalidate tokens |
-
-### LLM
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| /api/llm/providers | GET | List available providers |
-| /api/llm/api-keys | GET/POST/DELETE | Manage API keys |
-| /api/llm/settings | GET/PUT | User LLM preferences |
-| /api/query | POST | Execute LLM query |
-
-### Connectors
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| /api/connectors | GET | List connected services |
-| /api/connectors/{id} | GET/DELETE | Manage connector |
-| /api/connectors/oauth/{type}/authorize | GET | Start OAuth flow |
-| /api/connectors/sync/{id} | POST | Trigger data sync |
-
----
-
 ## Implementation Status
 
-### Completed
+### Completed ✅
 - [x] Database schema and ORM models
-- [x] Service layer structure
-- [x] LLM API routes
-- [x] Connector data schemas
+- [x] Unified data schema (10 new tables)
+- [x] Hub architecture (Insights + Action)
+- [x] Data lineage service and UI
+- [x] Customer segmentation explorer
+- [x] Story timeline visualization
+- [x] Predictive analytics module (518 templates)
+- [x] Connector plugin system (5 plugins)
 - [x] JWT token refresh (frontend)
 - [x] Multi-tenant middleware
 
-### In Progress
-- [ ] Real authentication implementation
-- [ ] Module route implementations
-- [ ] Connector OAuth flows
-- [ ] Frontend API integration
-- [ ] Workflow execution engine
-- [ ] Marketplace scraper
+### In Progress 🚧
+- [ ] Real causal graph population
+- [ ] Production NLP query engine
+- [ ] Real-time data sync
+- [ ] Email/calendar integration
+- [ ] Security scoring engine
+- [ ] Price discovery scraping
 
-### Planned
+### Planned 📋
 - [ ] Real-time notifications
 - [ ] Webhook support
 - [ ] File upload/export
@@ -468,7 +503,7 @@ docker-compose up -d
 
 # Run database migrations
 docker-compose exec postgres psql -U postgres -d smb_platform -f /docker-entrypoint-initdb.d/01_create_database.sql
-docker-compose exec postgres psql -U postgres -d smb_platform -f /docker-entrypoint-initdb.d/02_additional_tables.sql
+docker-compose exec postgres psql -U postgres -d smb_platform -f /docker-entrypoint-initdb.d/07_unified_schema.sql
 
 # Seed data
 docker-compose exec postgres psql -U postgres -d smb_platform -f /seeds/01_seed_data.sql
