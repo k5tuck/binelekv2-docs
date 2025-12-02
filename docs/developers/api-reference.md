@@ -493,6 +493,316 @@ Content-Type: application/json
 }
 ```
 
+## Hub Endpoints (NEW)
+
+### Insights Hub
+
+#### Get Overview
+
+```http
+GET /api/hubs/insights/overview
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "metrics": {
+      "revenue": { "current": 125000, "change": 12.5, "trend": "up" },
+      "orders": { "current": 450, "change": 8.2, "trend": "up" },
+      "customers": { "current": 1250, "change": 5.1, "trend": "up" },
+      "conversionRate": { "current": 3.2, "change": -0.3, "trend": "down" }
+    },
+    "alerts": [
+      { "id": "alert_1", "type": "warning", "message": "Inventory low on 3 products" }
+    ],
+    "recentActivity": []
+  }
+}
+```
+
+#### Get Forecasts
+
+```http
+GET /api/hubs/insights/forecasts?type=revenue&horizon=30
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+```
+
+#### Get Customer Segments
+
+```http
+GET /api/hubs/insights/segments
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+```
+
+#### Get Market Intelligence
+
+```http
+GET /api/hubs/insights/market-intel
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+```
+
+### Action Hub
+
+#### Get Causal Relationships
+
+```http
+GET /api/hubs/action/simulator/relationships
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "nodes": [
+      { "id": "marketing_spend", "label": "Marketing Spend", "type": "input" },
+      { "id": "website_traffic", "label": "Website Traffic", "type": "intermediate" },
+      { "id": "revenue", "label": "Revenue", "type": "output" }
+    ],
+    "edges": [
+      { "source": "marketing_spend", "target": "website_traffic", "weight": 0.85 },
+      { "source": "website_traffic", "target": "revenue", "weight": 0.72 }
+    ]
+  }
+}
+```
+
+#### Run Simulation
+
+```http
+POST /api/hubs/action/simulator/simulate
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+Content-Type: application/json
+
+{
+  "metricId": "marketing_spend",
+  "changePercent": 20,
+  "timeHorizon": 90
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "simulationId": "sim_123",
+    "inputChange": { "metric": "Marketing Spend", "change": "+20%" },
+    "effects": [
+      { "metric": "Website Traffic", "change": "+24%", "confidence": 0.85, "lag": "1 week" },
+      { "metric": "Conversions", "change": "+18%", "confidence": 0.72, "lag": "2 weeks" },
+      { "metric": "Revenue", "change": "+16%", "confidence": 0.61, "lag": "3 weeks" }
+    ]
+  }
+}
+```
+
+#### Get Initiatives
+
+```http
+GET /api/hubs/action/planner/initiatives
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+```
+
+#### Analyze Initiative
+
+```http
+POST /api/hubs/action/planner/analyze
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+Content-Type: application/json
+
+{
+  "name": "New Product Launch",
+  "expectedOutcome": { "revenue": 50000 },
+  "investment": 25000,
+  "timeline": "6 months"
+}
+```
+
+#### Get Automations
+
+```http
+GET /api/hubs/action/automations
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+```
+
+#### Get Action History
+
+```http
+GET /api/hubs/action/history?startDate=2024-01-01&type=simulation
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+```
+
+### Data Lineage
+
+#### Get Data Sources
+
+```http
+GET /api/data-lineage/sources
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "sources": [
+      {
+        "id": "src_shopify",
+        "name": "Shopify",
+        "type": "connector",
+        "status": "connected",
+        "lastSync": "2024-01-15T10:30:00Z",
+        "recordCount": 12450,
+        "qualityScore": 0.98
+      }
+    ]
+  }
+}
+```
+
+#### Get Quality Scores
+
+```http
+GET /api/data-lineage/quality-scores
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "overall": 0.94,
+    "dimensions": {
+      "accuracy": 0.96,
+      "completeness": 0.92,
+      "freshness": 0.98,
+      "consistency": 0.90
+    },
+    "bySource": [
+      { "source": "shopify", "score": 0.98 },
+      { "source": "stripe", "score": 0.99 },
+      { "source": "hubspot", "score": 0.85 }
+    ]
+  }
+}
+```
+
+#### Get Entity Provenance
+
+```http
+GET /api/data-lineage/entity/:type/:id
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+```
+
+**Example:** `GET /api/data-lineage/entity/customer/cust_123`
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "entityType": "customer",
+    "entityId": "cust_123",
+    "sources": [
+      {
+        "connector": "shopify",
+        "sourceId": "shop_456",
+        "fields": ["email", "name", "orders"],
+        "lastUpdate": "2024-01-15T10:30:00Z",
+        "confidence": 0.98
+      }
+    ],
+    "mergeConfidence": 0.95,
+    "qualityScore": 0.92
+  }
+}
+```
+
+#### Get Data Flow
+
+```http
+GET /api/data-lineage/flow
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+```
+
+#### Get Quality Trends
+
+```http
+GET /api/data-lineage/trends?days=30
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+```
+
+### Customer Segmentation
+
+#### Get All Segments
+
+```http
+GET /api/segmentation/segments
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+```
+
+#### Get Segment Details
+
+```http
+GET /api/segmentation/segments/:id
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+```
+
+#### Get Customers in Segment
+
+```http
+GET /api/segmentation/segments/:id/customers
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+```
+
+#### Get 2D Projection (Latent Space)
+
+```http
+GET /api/segmentation/latent-space?xAxis=frequency&yAxis=monetary
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+```
+
+#### Discover Segments
+
+```http
+POST /api/segmentation/discover
+Authorization: Bearer <token>
+X-Tenant-Id: <tenant_id>
+Content-Type: application/json
+
+{
+  "algorithm": "kmeans",
+  "numClusters": 5,
+  "features": ["recency", "frequency", "monetary"]
+}
+```
+
 ## Connectors
 
 ### List Connectors
